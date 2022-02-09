@@ -23,3 +23,5 @@ data may be computed. This is a complicated numerical problem, a modern treatmen
 A considerable amount of work has gone into using machine learning to predict the Hodge 
 numbers of the CICY3 manifolds by `looking' at the configuration matrices, much as a
 ML algorithm can infer the value of a handwritten digit by looking at its picture.
+
+Our analysis uses Siamese Networks to infer similarity across this dataset
