@@ -4,35 +4,7 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from scipy.interpolate import interp2d
 import matplotlib.pyplot as plt
 
-class CicyPad(BaseEstimator,TransformerMixin):
-    def __init__(self,upsampled_w,upsampled_h,ravel):
-        self.upsampled_w = upsampled_w
-        self.upsampled_h = upsampled_h
-        self.ravel = ravel
-    
-    def fit(self,X,y=None):
-        return self
-    
-    def transform(self,X,y=None):
-        return np.stack(X.apply(self.arraypad))
-    
-    def arraypad(self,arr): # we consider linear interpolation here as in other cases we might pick up artefacts
-        arr=np.array(arr)
-        if arr.shape[1]==1 and arr.shape[0]>1:
-            arr = np.hstack([arr-0.5,arr+0.5])
-        if arr.shape[0]==1 and arr.shape[1]>1:
-            arr = np.vstack([arr-0.5,arr+0.5])
-        elif arr.shape==(1,1):
-            arr = np.hstack([arr-0.5,arr+0.5])
-            arr = np.vstack([arr-0.5,arr+0.5])
-        W,H = arr.shape
-        xrange = lambda x: np.linspace(0, 1, x)
-        f = interp2d(xrange(H),xrange(W),arr, kind='linear')
-        arr = f(xrange(self.upsampled_h), xrange(self.upsampled_w))
-        if self.ravel:
-            arr = arr.ravel() # roll out the matrix into a 1d vector
-        return arr
-    
+
 class StratifiedSampler():
     '''
     Helpers to carry out stratified sampling of the CICY dataset. 
@@ -73,7 +45,7 @@ class StratifiedSampler():
                 list_remove,list_keep = list(hidx),list(hidx)
             else:
                 n_remove = max(self.min_sample,max_sample) # number of elements to draw into train set
-                rng = np.random.default_rng(0)
+                rng = np.random.default_rng(self.random_state)
                 list_remove = rng.choice(hidx,n_remove,replace=False)
                 list_keep = [idx for idx in hidx if not idx in list_remove]
             train.append(list_remove), test.append(list_keep)
@@ -114,10 +86,80 @@ class StratifiedSampler():
         keys = ['h','train population','test population','train+test','h population']
         values = []
         for i,h in enumerate(self.h_values):
-            values.append([h,len(self.idx_train[i]),len(self.idx_test[i]),len(self.idx_train[i])+len(self.idx_test[i]),len(self.h_indices[i])])
+            values.append([h,len(self.idx_train[i]),len(self.idx_test[i]),
+                           len(self.idx_train[i])+len(self.idx_test[i]),
+                           len(self.h_indices[i])])
         population = pd.DataFrame(values,columns=keys)
         print(population.to_markdown(tablefmt='grid',index=False))
         
+class CicyPad(BaseEstimator,TransformerMixin):
+    def __init__(self,upsampled_w,upsampled_h,pad_type='inter',ravel=False):
+        self.upsampled_w = upsampled_w
+        self.upsampled_h = upsampled_h
+        self.pad_type = pad_type
+        self.ravel = ravel
+    
+    def fit(self,X,y=None):
+        return self
+    
+    def transform(self,X,y=None):
+        return np.stack(X.apply(self.arraypad))
+    
+    def arraypad(self,arr): # support padtype 'inter' and 'constant'
+        if self.pad_type == 'inter':
+            return self.arraypad_inter(arr)
+        elif self.pad_type == 'constant':
+            return self.arraypad_constant(arr)
+        else:
+            raise ValueError('pad_type should be inter or constant')
+    
+    def arraypad_inter(self,arr): # we consider linear interpolation here as in other cases we might pick up artefacts
+        arr=np.array(arr)
+        if arr.shape[1]==1 and arr.shape[0]>1:
+            arr = np.hstack([arr-0.5,arr+0.5])
+        if arr.shape[0]==1 and arr.shape[1]>1:
+            arr = np.vstack([arr-0.5,arr+0.5])
+        elif arr.shape==(1,1):
+            a = arr[0,0]
+            arr = np.array([[a-0.5,a+0.5],[a-0.5,a+0.5]])
+        W,H = arr.shape
+        xrange = lambda x: np.linspace(0, 1, x)
+        f = interp2d(xrange(H),xrange(W),arr, kind='linear')
+        arr = f(xrange(self.upsampled_h), xrange(self.upsampled_w))
+        if self.ravel:
+            arr = arr.ravel() # roll out the matrix into a 1d vector
+        return arr
+    
+    def get_pad(self,row,col):
+        padtop = (self.upsampled_h-row)//2
+        padbottom = self.upsampled_h-row-padtop
+        padleft = (self.upsampled_w-col)//2
+        padright = self.upsampled_w-col-padleft
+        return padtop,padbottom,padleft,padright
+    
+    def arraypad_constant(self,arr):
+        arr=np.array(arr)
+        row, col = arr.shape
+        padt,padb,padl,padr = self.get_pad(row,col)
+        arr = np.pad(arr,((padt,padb),(padl,padr)),constant_values=-1)
+        if self.ravel:
+            arr = arr.ravel() # roll out the matrix into a 1d vector
+        return arr
+    
+def upsample(x,y,pad):
+    cicydata=np.empty((1,*x[0].shape)) # seed array to stack along
+    cicyh11=[]
+    hdata=np.array([1])
+    h = np.unique(y)
+    for i in h:
+        arr=x[np.where(y==i)[0]]
+        if len(arr)<pad:
+            arr=np.pad(arr,[(0,pad-len(arr)),(0,0),(0,0)],'wrap')
+            cicydata=np.vstack((cicydata,arr))
+        else:
+            cicydata=np.vstack((cicydata,arr))
+        hdata = np.hstack((hdata,np.full((len(arr),),i)))
+    return cicydata[1:], hdata[1:]
 
 def pretty_print_results(y_test,y_pred):
     columns = ['h','test population','predicted','true positives','precision',
