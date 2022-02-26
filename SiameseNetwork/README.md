@@ -18,6 +18,7 @@
 \end{document}
 ```
 
+
 |![the learned similarity score](similarity.png) |
 | *Visualizing the similarity score learned by the Siamese Network* |
 
