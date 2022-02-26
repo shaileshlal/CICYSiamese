@@ -1,8 +1,7 @@
 # Siamese Neural Networks applied to the CICY3 dataset
 
-```latex {cmd:true, hide:true}
-\documentclass{standalone}
-\usepackage{tikz}
+```latex {cmd:true, hide:true, output: results}
+\documentclass[tikz]{standalone}
 \usetikzlibrary{matrix}
 \begin{document}
 \begin{tikzpicture}
@@ -17,6 +16,10 @@
 \end{tikzpicture}
 \end{document}
 ```
+
+
+
+
 
 
 
