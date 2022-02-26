@@ -1,6 +1,6 @@
 # Siamese Neural Networks applied to the CICY3 dataset
 
-```latex {cmd=true hide=true}
+```latex {cmd:true, hide:true}
 \documentclass{standalone}
 \usepackage{tikz}
 \usetikzlibrary{matrix}
@@ -17,6 +17,10 @@
 \end{tikzpicture}
 \end{document}
 ```
+
+
+
+
 
 
 |![the learned similarity score](similarity.png) |
