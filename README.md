@@ -3,18 +3,21 @@
 This is a repository of codes for and around our work in [arXiv:2111.04761](https://arxiv.org/abs/2111.04761)
 
 In this paper we apply Siamese Neural Networks to learn a similarity score for Complete Intersection Calabi Yau manifolds of complex
-dimension 3. This dataset is known as CICY3 in the literature, and is downloadable [here](http://www-thphys.physics.ox.ac.uk/projects/CalabiYau/cicylist/).
+dimension 3. This dataset is known as CICY3 in the literature, and is downloadable [here](http://www-thphys.physics.ox.ac.uk/projects/CalabiYau/cicylist/)
+and [here](http://www1.phys.vt.edu/cicydata/).
 
-These are a class of manifolds which are of great relevance when building models that contain the physics of our four dimensional universe.
+These are a class of manifolds which are of central importance for building string theory models 
+explaining the physics of our four dimensional universe.
 
-In addition, they are perhaps the first dataset created for Algebraic Geometry and String Theory.
 
-The CICY3 dataset consists of configuration matrices, the second chern class $C_2$, 
-the Hodge numbers, the number of polynomials and the number of projective spaces. 
+## Overview 
 
-The topological data is contained in the Hodge numbers and the second Chern class.
-The more familiar Euler number is determined as a linear combination of the Hodge
-numbers. 
+The CICY3 dataset consists of configuration matrices, which are $2d$ tensors along with the number of
+rows and columns of each matrix as input data. The target variables are the topological data of the 
+CICY3. These are two positive integers, the Hodge numbers $h^{1,1}$ and $h^{2,1}$ and the second Chern
+class, an array of positive integers.
+
+The statistics of these input and target variables are explored [here](ExploratoryDataAnalyses/README.md).
 
 The configuration matrices are the independent variables from which the above topological 
 data may be computed. This is a complicated numerical problem, a modern treatment is 
