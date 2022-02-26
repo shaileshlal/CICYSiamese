@@ -78,6 +78,6 @@ to draw inferences across the test data.
 5. [UtilityScripts](UtilityScripts/): some helper scripts for handling the CICY3 dataset.
 
 This analysis results in the following representation of the CICY3 dataset as a scatterplot. Similar manifolds are clustered together.
-|![the CICY3 dataset clustered by similarity](SiameseNetwork/cicy3.png)|
-| *Visualizing the CICY3 dataset clustered by similarity* |
+![the CICY3 dataset clustered by similarity](SiameseNetwork/cicy3.png)
+*Visualizing the CICY3 dataset clustered by similarity. Colors encode h<sup>1,1</sup> values. Similar manifolds have the same h<sup>1,1</sup>.*
 
