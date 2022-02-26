@@ -11,4 +11,4 @@ set by examining which cluster they belong to in embedding space.
 
 2. We also use this embedding representation to characterize [typicality in the CICY3 data](typicalCICY3kmeans.ipynb). 
 Intuitively, an instance of data is typical if it is 'like most of the previous instances'. We show how the
-representation learnt by the Siamese Network ties in with this intuitive notion of typicality.
+representation learnt by the Siamese Network ties in with this notion of typicality.
