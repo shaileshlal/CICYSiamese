@@ -1,33 +1,10 @@
 # Siamese Neural Networks applied to the CICY3 dataset
 
-```latex {cmd:true, hide:true, output: results}
-\documentclass[tikz]{standalone}
-\usetikzlibrary{matrix}
-\begin{document}
-\begin{tikzpicture}
-  \matrix (m) [matrix of math nodes,row sep=3em,column sep=4em,minimum width=2em]
-  {
-     F & B \\
-      & A \\};
-  \path[-stealth]
-    (m-1-1) edge node [above] {$\beta$} (m-1-2)
-    (m-1-2) edge node [right] {$\rho$} (m-2-2)
-    (m-1-1) edge node [left] {$\alpha$} (m-2-2);
-\end{tikzpicture}
-\end{document}
-```
+![The Siamese Network](siamese.png) 
+*Visualizing the Siamese Network* 
 
+![the learned similarity score](similarity.png) 
+*Visualizing the similarity score learned by the Siamese Network* 
 
-
-
-
-
-
-
-
-
-|![the learned similarity score](similarity.png) |
-| *Visualizing the similarity score learned by the Siamese Network* |
-
-|![the CICY3 dataset clustered by similarity](cicy3.png)|
-| *Visualizing the CICY3 dataset clustered by similarity* |
+![the CICY3 dataset clustered by similarity](cicy3.png)
+*Visualizing the CICY3 dataset clustered by similarity* 
