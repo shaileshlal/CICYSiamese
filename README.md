@@ -17,7 +17,7 @@ rows and columns of each matrix as input data. The target variables are the topo
 CICY3. These are two positive integers, the Hodge numbers $h^{1,1}$ and $h^{2,1}$ and the second Chern
 class, an array of positive integers.
 
-The statistics of these input and target variables are explored [here](ExploratoryDataAnalyses/README.md).
+The statistics of these input and target variables are explored [here](ExploratoryDataAnalyses/).
 
 The configuration matrices are the independent variables from which the above topological 
 data may be computed. This is a complicated numerical problem, a modern treatment is 
