@@ -12,16 +12,16 @@ For our analysis, we define two CICY3 manifolds as similar if their _h<sup>1,1</
 equal. By training the network, we arrive at the following representation of the CICY3 dataset
 with similar manifolds visibly clustered together.
 ![the CICY3 dataset clustered by similarity](cicy3.png)
-*Visualizing the CICY3 dataset clustered by similarity* 
+*The CICY3 dataset clustered by similarity* 
 
 The distance between the representative points of two manifolds may be interpreted as a _similarity score_,
 with similar manifolds having a score close to zero, and dissimilar ones having a score away from zero. This
-is explicitly seen in the Figure below, which plots the average similarity scores between classes *I* and
-*J*. Here each class *I* corresponds to manifolds with Hodge number _h<sup>1,1;I</sup>. If we visualize these
+is explicitly seen in the figure below, which plots the average similarity scores between classes *I* and
+*J*. Here each class *I* corresponds to manifolds with Hodge number _h<sup>1,1;*I*</sup>_. If we visualize these
 mean scores as a matrix, then the diagonal elements much be close to zero, and the off diagonal elements must
 be far away from zero. We indeed find this property in the Figure below, which is obtained from explicitly
 computing these mean scores across all classes in the CICY3 dataset.
 ![the learned similarity score](similarity.png) 
-*Visualizing the similarity score learned by the Siamese Network* 
+*The similarity score learned by the Siamese Network* 
 
 
