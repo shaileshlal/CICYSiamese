@@ -3,7 +3,7 @@
 This is a repository of codes for and around our work in [arXiv:2111.04761](https://arxiv.org/abs/2111.04761).
 
 In this paper we apply Siamese Neural Networks to learn a similarity score for Complete Intersection Calabi Yau manifolds of complex
-dimension 3. This dataset is known as CICY3 in the literature, and is downloadable [here](http://www-thphys.physics.ox.ac.uk/projects/CalabiYau/cicylist/)
+dimension 3. These dataset are known as CICY3 in the literature, and are downloadable [here](http://www-thphys.physics.ox.ac.uk/projects/CalabiYau/cicylist/)
 and [here](http://www1.phys.vt.edu/cicydata/).
 
 These are a class of manifolds which are of central importance for building string theory models 
@@ -31,8 +31,8 @@ data may be computed. This is a complicated numerical problem, a modern treatmen
 [here](https://arxiv.org/abs/0805.2875).
 
 A considerable amount of work has gone into using machine learning to predict the Hodge 
-numbers of the CICY3 manifolds by `looking' at the configuration matrices, much as a
-ML algorithm can infer the value of a handwritten digit by looking at its picture. The state of the
+numbers of the CICY3 manifolds by `looking' at the configuration matrices, much as
+ML can infer the value of a handwritten digit by looking at its picture. The state of the
 art is [here](https://arxiv.org/abs/2007.13379).
 
 Knowledge of this topological data is crucial to using these manifolds to build models of the four dimensional
@@ -61,7 +61,7 @@ achieve an accuracy of 98.2 \% on the test set.
 address the string landscape problem even in the face of very limited available data. 
 
 The second point is especially relevant to the current state of the art as we indeed have very limited data from the string landscape, and the
-overwhelmingly vast majority of it is completely unexplored.
+overwhelmingly vast majority of it is completely unexplored (i.e. unlabelled).
 
 ## Project Structure
 
