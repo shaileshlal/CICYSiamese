@@ -3,7 +3,7 @@
 This is a repository of codes for and around our work in [arXiv:2111.04761](https://arxiv.org/abs/2111.04761).
 
 In this paper we apply Siamese Neural Networks to learn a similarity score for Complete Intersection Calabi Yau manifolds of complex
-dimension 3. These dataset are known as CICY3 in the literature, and are downloadable [here](http://www-thphys.physics.ox.ac.uk/projects/CalabiYau/cicylist/)
+dimension 3. These datasets are known as CICY3 in the literature, and are downloadable [here](http://www-thphys.physics.ox.ac.uk/projects/CalabiYau/cicylist/)
 and [here](http://www1.phys.vt.edu/cicydata/).
 
 These are a class of manifolds which are of central importance for building string theory models 
