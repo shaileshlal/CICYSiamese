@@ -5,7 +5,7 @@ on its demographics. The dataset is highly skewed in the target variables. As a 
 _h<sup>1,1</sup>_ = 16 has only one corresponding element while _h<sup>1,1</sup>_ = 7 has
 more than 1400. The _h<sup>2,1</sup>_ statistics are even more skewed.
 ![_h<sup>1,1</sup>_ demographics](hpopulations.png)
-*_Demographics of CICY3*
+*Demographics of CICY3*
 
 This skewness is characteristic to datasets in string theory and mathematical physics, as detailed 
 [here](http://arxiv.org/abs/2011.14442).
