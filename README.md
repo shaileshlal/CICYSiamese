@@ -19,7 +19,7 @@ for such model building. Their additional mathematical properties make them even
 
 ## Overview of Dataset
 
-The CICY3 dataset consists of configuration matrices, which are $2d$ tensors along with the number of
+The CICY3 dataset consists of configuration matrices, which are two-dimensional tensors along with the number of
 rows and columns of each matrix as input data. The target variables are the topological data of the 
 CICY3. These are two positive integers, the Hodge numbers _h<sup>1,1</sup>_, _h<sup>2,1</sup>_ 
 and the second Chern class _C<sub>2</sub>_, an array of positive integers.
@@ -79,5 +79,5 @@ to draw inferences across the test data.
 
 This analysis results in the following representation of the CICY3 dataset as a scatterplot. Similar manifolds are clustered together.
 ![the CICY3 dataset clustered by similarity](SiameseNetwork/cicy3.png)
-*Visualizing the CICY3 dataset clustered by similarity. Colors encode h<sup>1,1</sup> values. Similar manifolds have the same h<sup>1,1</sup>.*
+*Visualizing the CICY3 dataset clustered by similarity. Colors encode h<sup>1,1</sup>. Similar manifolds have the same h<sup>1,1</sup>.*
 
