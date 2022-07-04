@@ -38,6 +38,8 @@ class StratifiedSampler():
         self.idx_train, self.idx_test = self.sampler()
     
     def sampler(self):
+        '''sample from dataset by every unique Hodge number
+           returns train, test'''
         train,test = [],[]
         for hidx in self.h_indices:
             max_sample = int(self.ratio*len(hidx))
@@ -52,6 +54,8 @@ class StratifiedSampler():
         return train, test
     
     def plot_population(self):
+        '''plots the population histograms for train
+        test and total.'''
         population = lambda x : [len(h) for h in x]
         plt.bar(self.h_values,population(self.h_indices),alpha=0.3,color='orange',label='CICY3')
         plt.bar(self.h_values,population(self.idx_test),alpha=0.5,color='green',label='test')
@@ -93,6 +97,16 @@ class StratifiedSampler():
         print(population.to_markdown(tablefmt='grid',index=False))
         
 class CicyPad(BaseEstimator,TransformerMixin):
+    '''Helper class to pad CICY matrices to a uniform size. 
+    Parameters:
+    -----------
+        upsampled_w: number of columns to be upsampled to
+        upsampled_h: number of rows to be upsampled to
+        pad_type: 'inter'(polation) or 'constant'; the type of padding.
+        ravel: True or False, to ravel or not.
+    has a fit and a transform method inherited from BaseEstimator and 
+    TransformerMixin.
+    '''
     def __init__(self,upsampled_w,upsampled_h,pad_type='inter',ravel=False):
         self.upsampled_w = upsampled_w
         self.upsampled_h = upsampled_h
@@ -113,7 +127,8 @@ class CicyPad(BaseEstimator,TransformerMixin):
         else:
             raise ValueError('pad_type should be inter or constant')
     
-    def arraypad_inter(self,arr): # we consider linear interpolation here as in other cases we might pick up artefacts
+    def arraypad_inter(self,arr): 
+        '''pads input array by linear interpolation'''
         arr=np.array(arr)
         if arr.shape[1]==1 and arr.shape[0]>1:
             arr = np.hstack([arr-0.5,arr+0.5])
@@ -131,6 +146,7 @@ class CicyPad(BaseEstimator,TransformerMixin):
         return arr
     
     def get_pad(self,row,col):
+        '''computes how much to pad along the top, left, right, bottom'''
         padtop = (self.upsampled_h-row)//2
         padbottom = self.upsampled_h-row-padtop
         padleft = (self.upsampled_w-col)//2
@@ -138,6 +154,7 @@ class CicyPad(BaseEstimator,TransformerMixin):
         return padtop,padbottom,padleft,padright
     
     def arraypad_constant(self,arr):
+        '''pads input array by a constant number'''
         arr=np.array(arr)
         row, col = arr.shape
         padt,padb,padl,padr = self.get_pad(row,col)
@@ -162,6 +179,7 @@ def upsample(x,y,pad):
     return cicydata[1:], hdata[1:]
 
 def pretty_print_results(y_test,y_pred):
+    '''pretty printing results'''
     columns = ['h','test population','predicted','true positives','precision',
                'recall','percentage of test set isolated']
     y_val = np.unique(y_test)
@@ -179,6 +197,7 @@ def pretty_print_results(y_test,y_pred):
     print(results.to_markdown(tablefmt='grid',index=False))
     
 def analyze_knn_cv(cross_val_results):
+    '''helper function to output cross validation scores for KNN classifier'''
     uniform_idxs=[elt['knn Classifier__weights']=='uniform' 
                   for elt in cross_val_results['params']]
     distance_idxs=[elt['knn Classifier__weights']=='distance' 

@@ -11,6 +11,17 @@ def get_h11_subset(x,h11,h21,h):
     return x[idx], h11[idx], h21[idx]
 
 def project_and_plt(ax,traincloud,testcloud,outlier_reject=(2.0,2.0)):
+    '''helper function to project traincloud and test cloud by PCA to 
+    2 components and plot them as point clouds. Points very far away are rejected
+    by outlier_reject.
+    Parameters:
+    -----------
+        ax: matplotlib.pyplot axis to plot along
+        traincloud: tuple of x_train and color values to plot with, color can be None
+                    in which case matplotlib will choose.
+        testcloud: as above, for x_test instead of train
+        outlier_reject: discard points very far away. tuple (x_parameter, y_parameter)
+    '''
     [x_train,color_train]=traincloud
     [x_test,color_test]=testcloud
     pca = PCA(n_components=2)
@@ -30,6 +41,7 @@ def project_and_plt(ax,traincloud,testcloud,outlier_reject=(2.0,2.0)):
     return ax
     
 def create_histogram(ax,y_te_h21,y_tr_h21):
+    '''plot histogram of train and test h21 values'''
     ax.hist(y_te_h21,alpha=0.4,label='test data')
     ax.hist(y_tr_h21,label = 'train data')
     ax.set_xlabel('h21')
@@ -38,6 +50,8 @@ def create_histogram(ax,y_te_h21,y_tr_h21):
     return ax
     
 def plot_kmeans_scores(inertia,silhouette,k_range,h):
+    '''plot inertia and silhouette scores in k_range for a 
+    Hodge number h'''
     f, ax = plt.subplots(1,2)
     f.tight_layout()
     ax[0].plot(k_range,inertia)
@@ -50,6 +64,8 @@ def plot_kmeans_scores(inertia,silhouette,k_range,h):
     plt.show()
     
 def get_kmeans_scores(x,k):
+    '''get inertia and silhouette scores for a point-cloud k and
+    k clusters'''
     kmeans = KMeans(n_clusters=k)
     y_pred = kmeans.fit_predict(x)
     inertia =kmeans.inertia_
@@ -60,12 +76,17 @@ def get_kmeans_scores(x,k):
     return inertia,silhouette
 
 def kmeans_results(kmeans,x_tr_h11,x_te_h11):
+    '''runs fit_predict, predict and transform to get predicted
+    values for train and test points using kmeans. runs transform 
+    on test set to get distance from every centroid.'''
     y_pred_tr = kmeans.fit_predict(x_tr_h11)
     y_pred_te = kmeans.predict(x_te_h11)
     centroid_dist = kmeans.transform(x_te_h11)
     return y_pred_tr, y_pred_te, centroid_dist
 
 def h21_statistics(h21_train,h21_test,idx_representatives):
+    '''Takes an h21 train and test set for a given h11, computes
+    the typical representatives of the test set and '''
     h21_typical= h21_test[idx_representatives].astype('int')
     h21 = np.hstack([h21_train,h21_test])
     h21_mean = np.mean(h21)
